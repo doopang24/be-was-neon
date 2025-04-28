@@ -9,15 +9,11 @@ import webserver.util.Constants;
 
 public class LogoutHandler implements Handler {
 
-    private final String COOKIE = "cookie";
-    private final String SET_COOKIE = "Set-Cookie";
-    private final String JSESSIONID = "JSESSIONID=";
-    private final String PATH_ATTRIBUTE_SETTING = "; Path=/; HttpOnly";
     private final String MAX_AGE_ATTRIBUTE = "; Max-Age=0";
 
     @Override
     public HttpResponse handle(HttpRequest request) {
-        String cookie = request.getHeaders().get(COOKIE);
+        String cookie = request.getHeaders().get(Constants.COOKIE);
         RequestParser.extractSessionId(cookie).ifPresent(SessionMap::removeSession);
         return createResponse();
     }
@@ -27,7 +23,7 @@ public class LogoutHandler implements Handler {
                 .httpVersion(Constants.HTTP_VERSION)
                 .status(Status.FOUND)
                 .header(Constants.LOCATION, Constants.ROOT_PATH)
-                .header(SET_COOKIE, JSESSIONID + MAX_AGE_ATTRIBUTE + PATH_ATTRIBUTE_SETTING)
+                .header(Constants.SET_COOKIE, Constants.JSESSIONID + MAX_AGE_ATTRIBUTE + Constants.PATH_ATTRIBUTE_SETTING)
                 .build();
     }
 }

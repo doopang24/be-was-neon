@@ -11,10 +11,6 @@ public class Session {
         this.createdAt = System.currentTimeMillis();
     }
 
-//    public String getSessionId() {
-//        return sessionId;
-//    }
-
     public User getUser() {
         return user;
     }
