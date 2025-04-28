@@ -1,5 +1,7 @@
 package webserver.session;
 
+import model.User;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,7 +26,9 @@ public class SessionMap {
         sessions.remove(sessionId);
     }
 
-    public static int sessionSize() {
-        return sessions.size();
+    public static Optional<String> getUserId(String sessionId) {
+        return Optional.ofNullable(sessions.get(sessionId))
+                .map(Session::getUser)
+                .map(User::getUserId);
     }
 }
