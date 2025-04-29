@@ -16,9 +16,16 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     testImplementation 'org.assertj:assertj-core:3.16.1'
 
-
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'webserver.WebServer'
+        )
+    }
 }
