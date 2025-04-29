@@ -1,5 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+application {
+    mainClass = 'webserver.WebServer'
 }
 
 group 'codesquad'
@@ -27,5 +32,8 @@ jar {
         attributes(
                 'Main-Class': 'webserver.WebServer'
         )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
