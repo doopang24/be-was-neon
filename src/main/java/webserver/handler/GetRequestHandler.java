@@ -69,7 +69,7 @@ public class GetRequestHandler implements Handler {
         return RequestParser.extractSessionId(cookie);
     }
 
-    private String createLoginStateButtons(boolean isLoggedIn) {
+    private String createLoginStateButtonsHtml(boolean isLoggedIn) {
         if (isLoggedIn) {
             return """
                     <li class="header__menu__item">
@@ -95,7 +95,7 @@ public class GetRequestHandler implements Handler {
 
     private byte[] replaceLoginRelatedPlaceHolders(HttpRequest request, String html) {
         boolean isLoggedIn = isLoggedIn(request);
-        String loginButtonHtml = createLoginStateButtons(isLoggedIn);
+        String loginButtonHtml =  createLoginStateButtonsHtml(isLoggedIn);
 
         html = html.replace(LOGIN_STATE_BUTTONS, loginButtonHtml);
         String userName = extractSessionId(request)
