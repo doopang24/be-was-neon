@@ -2,21 +2,21 @@ package webserver.loader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.util.Constants;
 
 import java.io.*;
-import java.util.List;
 
-public class FileResourceLoader implements ResourceLoader {
+public class StaticResourceLoader implements ResourceLoader {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileResourceLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(StaticResourceLoader.class);
     private final String PREFIX = "src/main/resources/static";
 
     @Override
     public FileResult fileToBytes(String requestURL) {
         File file = new File(PREFIX + requestURL);
         if(file.isDirectory()) {
-            file = new File(file, "index.html");
-            requestURL += "/index.html";
+            file = new File(file, Constants.DEFAULT_MAIN_PAGE);
+            requestURL += Constants.DEFAULT_MAIN_PAGE;
         }
 
         try (FileInputStream fis = new FileInputStream(file);
@@ -29,7 +29,7 @@ public class FileResourceLoader implements ResourceLoader {
             }
             return new FileResult(out.toByteArray(), requestURL);
         } catch (IOException e) {
-            logger.error("파일을 읽는 중 오류 발생", e);
+            logger.error("정적 파일을 읽는 중 오류 발생", e);
             throw new RuntimeException(e);
         }
     }
